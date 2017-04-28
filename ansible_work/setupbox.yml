@@ -1,0 +1,27 @@
+---
+- hosts: '{{ target }}'
+  user: root
+  gather_facts: no
+  tasks:
+    - set_fact: url=http://rpm.datastax.com/community
+    - set_fact: name=datastax
+    - template: src=yum.repo.j2 dest=/etc/yum.repos.d/datastax.repo
+
+    - yum: name=http://ftp.linux.ncsu.edu/pub/epel/6/i386/epel-release-6-8.noarch.rpm state=installed
+
+    #- yum: name=packages/jdk-7u75-linux-x64.rpm state=installed
+
+    - yum: name={{ item }} state=latest
+      with_items:
+        - git
+        - python-crypto
+        - python-paramiko
+        - python-jinja2
+        - libselinux-python
+        - PyYAML
+        - vim-enhanced
+        - tmux
+        - dsc20-2.0.12-1
+        - cassandra20-2.0.12-1
+
+    - shell: chkconfig --add cassandra
