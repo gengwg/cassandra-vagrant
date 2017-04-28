@@ -9,8 +9,6 @@
 
     - yum: name=http://ftp.linux.ncsu.edu/pub/epel/6/i386/epel-release-6-8.noarch.rpm state=installed
 
-    #- yum: name=packages/jdk-7u75-linux-x64.rpm state=installed
-
     - yum: name={{ item }} state=latest
       with_items:
         - git
